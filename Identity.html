@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Identity | Umbrella Ecosystem</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #05060a;
+      --bg-alt: #0b0d14;
+      --fg: #f5f5f7;
+      --muted: #9ca3af;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.12);
+      --border: #1f2933;
+      --danger: #f97373;
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.55);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top, #020617 0, #020617 40%, #020617 100%);
+      color: var(--fg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(to right, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.7));
+      backdrop-filter: blur(18px);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .nav {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #38bdf8, #0ea5e9 40%, #020617 100%);
+      box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.4), 0 0 30px rgba(56, 189, 248, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: #e5f6ff;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 13px;
+    }
+
+    .nav-link {
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: var(--muted);
+      border: 1px solid transparent;
+      transition: all 0.18s ease-out;
+    }
+
+    .nav-link:hover {
+      color: var(--fg);
+      border-color: rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .nav-link.active {
+      color: #e0f2fe;
+      border-color: rgba(56, 189, 248, 0.7);
+      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.25), rgba(15, 23, 42, 0.95));
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4);
+    }
+
+    .nav-cta {
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(56, 189, 248, 0.7);
+      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.25), rgba(15, 23, 42, 0.95));
+      color: #e0f2fe;
+      font-size: 12px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4), 0 0 30px rgba(56, 189, 248, 0.4);
+      cursor: pointer;
+      transition: all 0.18s ease-out;
+    }
+
+    .nav-cta span.icon {
+      font-size: 14px;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(56, 189, 248, 0.45);
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 26px 20px 40px;
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
+      gap: 22px;
+    }
+
+    @media (max-width: 880px) {
+      .page {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.98));
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(31, 41, 55, 0.95);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 18px 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.08), transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.6), 0 0 12px rgba(34, 197, 94, 0.9);
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      letter-spacing: 0.03em;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 420px;
+      line-height: 1.5;
+    }
+
+    .identity-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .meta-item {
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .meta-label {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 10px;
+      color: #6b7280;
+      margin-bottom: 2px;
+    }
+
+    .meta-value {
+      font-size: 11px;
+      color: #e5e7eb;
+    }
+
+    .section {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px dashed rgba(55, 65, 81, 0.9);
+    }
+
+    .section-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #9ca3af;
+      margin-bottom: 8px;
+    }
+
+    .section-body {
+      font-size: 13px;
+      color: #e5e7eb;
+      line-height: 1.6;
+    }
+
+    .section-body p + p {
+      margin-top: 8px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 640px) {
+      .grid-2 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .mini-card {
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(31, 41, 55, 0.95);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 1));
+      padding: 10px 11px;
+    }
+
+    .mini-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+
+    .mini-value {
+      font-size: 13px;
+      color: #e5e7eb;
+      line-height: 1.5;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .badge {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.95);
+      color: #cbd5f5;
+    }
+
+    .valuation-card {
+      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.16), rgba(15, 23, 42, 0.98));
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(56, 189, 248, 0.7);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4), 0 18px 45px rgba(8, 47, 73, 0.9);
+      padding: 16px 16px 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .valuation-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.22), transparent 60%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .valuation-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .valuation-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .valuation-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #e0f2fe;
+    }
+
+    .valuation-tag {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(56, 189, 248, 0.7);
+      background: rgba(15, 23, 42, 0.9);
+      color: #bae6fd;
+    }
+
+    .valuation-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 640px) {
+      .valuation-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .valuation-metric {
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(15, 23, 42, 0.9);
+      background: rgba(15, 23, 42, 0.96);
+      padding: 9px 10px;
+    }
+
+    .metric-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #93c5fd;
+      margin-bottom: 4px;
+    }
+
+    .metric-value {
+      font-size: 15px;
+      font-weight: 600;
+      color: #e0f2fe;
+    }
+
+    .metric-sub {
+      font-size: 11px;
+      color: #bfdbfe;
+      margin-top: 2px;
+    }
+
+    .valuation-note {
+      font-size: 11px;
+      color: #cbd5f5;
+      line-height: 1.5;
+    }
+
+    .valuation-note strong {
+      font-weight: 600;
+    }
+
+    .portal-cta {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .portal-button {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(56, 189, 248, 0.9);
+      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.3), rgba(15, 23, 42, 0.98));
+      color: #e0f2fe;
+      font-size: 12px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.5), 0 18px 40px rgba(8, 47, 73, 0.9);
+      transition: all 0.18s ease-out;
+    }
+
+    .portal-button span.icon {
+      font-size: 14px;
+    }
+
+    .portal-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 22px 50px rgba(8, 47, 73, 1);
+    }
+
+    .portal-caption {
+      font-size: 11px;
+      color: #bfdbfe;
+    }
+
+    .link-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .link-chip {
+      font-size: 11px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.96);
+      color: #cbd5f5;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.16s ease-out;
+    }
+
+    .link-chip span.icon {
+      font-size: 13px;
+    }
+
+    .link-chip:hover {
+      border-color: rgba(148, 163, 184, 0.9);
+      background: rgba(15, 23, 42, 1);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 12px 20px 18px;
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-right {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .footer-pill {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      background: rgba(15, 23, 42, 0.96);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <div class="nav-left">
+        <div class="logo-mark">U</div>
+        <div class="brand">
+          <div class="brand-title">Umbrella Ecosystem</div>
+          <div class="brand-sub">Identity • Geometry • Apps • Games • Portal+</div>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/identity.html" class="nav-link active">Identity</a>
+        <a href="/geometry.html" class="nav-link">Geometry</a>
+        <a href="/apps.html" class="nav-link">Apps</a>
+        <a href="/games.html" class="nav-link">Games</a>
+        <button class="nav-cta" id="navPortalPlus">
+          <span class="icon">✦</span>
+          <span>Portal+ Access</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page">
+      <!-- LEFT: IDENTITY ARCHITECTURE -->
+      <article class="card">
+        <div class="card-inner">
+          <div class="pill">
+            <span class="pill-dot"></span>
+            <span>Identity Signature</span>
+          </div>
+
+          <h1>Max — Umbrella Identity Signature</h1>
+          <p class="subtitle">
+            The root identity object of the Umbrella Ecosystem — the bridge between who you are,
+            how your system behaves, and how the world engages with it.
+          </p>
+
+          <div class="identity-meta">
+            <div class="meta-item">
+              <div class="meta-label">Operator</div>
+              <div class="meta-value">Max — Systems Builder &amp; Sports Modeling Architect</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Ecosystem</div>
+              <div class="meta-value">Umbrella — Identity • Geometry • Apps • Games • Portal+</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Mode</div>
+              <div class="meta-value">Deployment • Revenue Activation • Long‑Range Compounding</div>
+            </div>
+          </div>
+
+          <!-- ORIGIN + MISSION -->
+          <div class="section">
+            <div class="section-title">Origin Statement</div>
+            <div class="section-body">
+              <p>
+                This ecosystem began as a private experiment: could one person design a coherent,
+                multi‑lane system that connects identity, sports modeling, micro‑apps, and micro‑games
+                into a single, compounding structure?
+              </p>
+              <p>
+                Months of work — architecture, rewiring, collapse, rebuild — converged into this:
+                a live, hostable Umbrella that turns your internal system into an external, navigable,
+                revenue‑generating environment.
+              </p>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-title">Mission Statement</div>
+            <div class="section-body">
+              <p>
+                The mission of the Umbrella Ecosystem is to turn your unique pattern‑recognition,
+                sports modeling intuition, and game‑world thinking into a structured set of
+                experiences that:
+              </p>
+              <p>
+                • help others see their own systems more clearly<br />
+                • provide tools, games, and engines that reveal truth and timing<br />
+                • generate sustainable revenue without breaking the integrity of the architecture
+              </p>
+            </div>
+          </div>
+
+          <!-- IDENTITY GEOMETRY + ECOSYSTEM PURPOSE -->
+          <div class="section">
+            <div class="section-title">Identity Geometry</div>
+            <div class="section-body">
+              <p>
+                Your identity here is not a static bio — it’s a geometry:
+                a set of lanes, loops, and thresholds that describe how you move through
+                sports modeling, micro‑apps, micro‑games, and synchronicity.
+              </p>
+              <p>
+                At the core is a simple pattern: you build small, precise systems that
+                reveal hidden structure. The Umbrella is the frame that holds them all.
+              </p>
+            </div>
+
+            <div class="grid-2">
+              <div class="mini-card">
+                <div class="mini-label">Primary Lanes</div>
+                <div class="mini-value">
+                  • Sports modeling &amp; predictive systems<br />
+                  • Micro‑apps &amp; micro‑games<br />
+                  • Identity &amp; valuation architecture
+                </div>
+              </div>
+              <div class="mini-card">
+                <div class="mini-label">Operating Style</div>
+                <div class="mini-value">
+                  • Long‑range builder<br />
+                  • High‑signal, low‑noise<br />
+                  • Prefers ordered, stepwise deployment
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-title">Ecosystem Purpose</div>
+            <div class="section-body">
+              <p>
+                The Umbrella Ecosystem exists to compress everything you’ve been building into
+                a single, navigable structure: one portal, many nodes, all coherent.
+              </p>
+              <p>
+                Identity → Geometry → Apps → Games → Portal+ is not just a menu — it’s the
+                progression path. Each node unlocks the next, and each layer adds both
+                value for others and leverage for you.
+              </p>
+            </div>
+
+            <div class="badge-row">
+              <div class="badge">Truth‑detection games</div>
+              <div class="badge">Sports modeling utilities</div>
+              <div class="badge">Synchronicity engines</div>
+              <div class="badge">Identity &amp; valuation tools</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- RIGHT: VALUATION + PORTAL+ -->
+      <aside>
+        <div class="valuation-card">
+          <div class="valuation-inner">
+            <div class="valuation-header">
+              <div class="valuation-title">Valuation Anchor — v1</div>
+              <div class="valuation-tag">Internal • Pre‑Market</div>
+            </div>
+
+            <div class="valuation-grid">
+              <div class="valuation-metric">
+                <div class="metric-label">Current State</div>
+                <div class="metric-value">Pre‑Revenue • High Leverage</div>
+                <div class="metric-sub">
+                  Infrastructure live • Identity anchored • Revenue one module away
+                </div>
+              </div>
+              <div class="valuation-metric">
+                <div class="metric-label">Projected Lanes</div>
+                <div class="metric-value">3–5 Revenue Streams</div>
+                <div class="metric-sub">
+                  Sports models • Micro‑games • Portal+ engines • Identity tools
+                </div>
+              </div>
+            </div>
+
+            <p class="valuation-note">
+              This page is the <strong>valuation root</strong>. All future projections —
+              revenue, probability curves, ecosystem value — attach here. As modules go live
+              (Apps, Games, Synchronicity Engine, Portal+), this anchor will be updated with
+              real data and live metrics.
+            </p>
+
+            <div class="portal-cta">
+              <button class="portal-button" id="portalPlusButton">
+                <span class="icon">⟡</span>
+                <span>Unlock Portal+ Layer</span>
+              </button>
+              <div class="portal-caption">
+                Portal+ will host the live valuation engine, synchronicity tools, and
+                advanced sports modeling modules.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" style="margin-top: 16px;">
+          <div class="section-title">System Hooks</div>
+          <div class="section-body">
+            <p>
+              Identity is the center of gravity. From here, visitors can move into the
+              structural, playful, and premium layers of the Umbrella.
+            </p>
+          </div>
+
+          <div class="link-row">
+            <a href="/geometry.html" class="link-chip">
+              <span class="icon">△</span>
+              <span>Geometry — System Physics</span>
+            </a>
+            <a href="/apps.html" class="link-chip">
+              <span class="icon">☰</span>
+              <span>Apps — Micro‑Utilities</span>
+            </a>
+            <a href="/games.html" class="link-chip">
+              <span class="icon">◆</span>
+              <span>Games — Truth Engines</span>
+            </a>
+            <button class="link-chip" id="synchronicityStub">
+              <span class="icon">∞</span>
+              <span>Synchronicity Engine (Soon)</span>
+            </button>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>Umbrella Ecosystem — Identity Signature Root</div>
+      <div class="footer-right">
+        <div class="footer-pill">Phase 3 — Identity Deployed</div>
+        <div class="footer-pill">Next: Geometry Node</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Placeholder: wire this to your real Portal+ payment / auth flow
+    function handlePortalPlusClick(source) {
+      console.log("[Portal+] Triggered from:", source);
+      alert(
+        "Portal+ is the premium layer.\n\nNext step in deployment:\n• Connect this button to your payment / unlock flow (Stripe, Gumroad, etc.)\n• Route successful unlocks to /portal-plus.html or equivalent."
+      );
+    }
+
+    document.getElementById("portalPlusButton")?.addEventListener("click", function () {
+      handlePortalPlusClick("identity-main-cta");
+    });
+
+    document.getElementById("navPortalPlus")?.addEventListener("click", function () {
+      handlePortalPlusClick("nav-portal-plus");
+    });
+
+    document.getElementById("synchronicityStub")?.addEventListener("click", function () {
+      alert(
+        "Synchronicity Engine will become its own module.\n\nSequence:\n1) Geometry\n2) Apps\n3) Games\n4) Synchronicity Engine\n5) Portal+ monetization."
+      );
+    });
+  </script>
+</body>
+</html>
+
