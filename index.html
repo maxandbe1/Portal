@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #05060a;
+      color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header, footer {
+      padding: 1.5rem 2rem;
+      background: #05060a;
+      border-bottom: 1px solid #222;
+    }
+    footer {
+      border-top: 1px solid #222;
+      border-bottom: none;
+      margin-top: auto;
+    }
+    .logo {
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+    nav {
+      margin-top: 0.75rem;
+      display: flex;
+      gap: 1.25rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      opacity: 0.8;
+    }
+    nav a {
+      color: #f5f5f5;
+      text-decoration: none;
+    }
+    nav a:hover {
+      opacity: 1;
+    }
+    main {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 1.5rem;
+      background: radial-gradient(circle at top left, #151827, #05060a);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      opacity: 0.9;
+    }
+    .card p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      line-height: 1.5;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      opacity: 0.8;
+      margin-bottom: 0.75rem;
+    }
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #4ade80;
+      box-shadow: 0 0 8px #4ade80;
+    }
+    .footer-geo {
+      font-size: 0.75rem;
+      opacity: 0.7;
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">PORTAL</div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Identity</a>
+      <a href="#">Geometry</a>
+      <a href="#">Apps</a>
+      <a href="#">Games</a>
+      <a href="#">Portal+</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="badge"><span class="dot"></span>Signature</div>
+      <h2>Identity Signature Generator</h2>
+      <p>Generate high‑signal identity signatures that encode your physics into a single visual mark.</p>
+    </section>
+
+    <section class="card">
+      <div class="badge"><span class="dot"></span>Symbol</div>
+      <h2>Identity Symbol Generator</h2>
+      <p>Create symbolic glyphs that map your internal state to clean, repeatable iconography.</p>
+    </section>
+
+    <section class="card">
+      <div class="badge"><span class="dot"></span>Pattern</div>
+      <h2>Identity Pattern Generator</h2>
+      <p>Build repeating identity patterns that can be used across wardrobe, UI, and artifacts.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-geo">
+      <span>Silver Arc</span>
+      <span>Lunar Triangle</span>
+      <span>Horizon Line</span>
+      <span>© Portal</span>
+    </div>
+  </footer>
+</body>
+</html>
+
