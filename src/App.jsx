@@ -1,5 +1,6 @@
 import React from "react";
 import Identity from "./pages/Identity.jsx";
+import Patterns from "./pages/Patterns.jsx";
 
 export default function App() {
   return (
@@ -7,8 +8,8 @@ export default function App() {
       <h1>Portal</h1>
       <p>Full application mode activated.</p>
 
-      {/* First dynamic module */}
       <Identity />
+      <Patterns />
     </main>
   );
 }
