@@ -1,0 +1,11 @@
+{
+  "order": [
+    "identity"
+  ],
+  "modules": {
+    "identity": {
+      "name": "Identity Module",
+      "path": "./identity/module-bridge.js"
+    }
+  }
+}
