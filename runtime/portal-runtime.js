@@ -1,8 +1,8 @@
 import { EventBus } from "./event-bus.js";
 import { initSession } from "../population/session-init.js";
+import { loadModules } from "./module-loader.js";
 
 export function bootPortal() {
-  // Global Portal object
   window.Portal = {
     session: initSession(),
     bus: new EventBus(),
@@ -12,4 +12,7 @@ export function bootPortal() {
 
   console.log("%cPortal Runtime Booted", "color:#0f0;font-weight:bold;");
   console.log("Session:", window.Portal.session);
+
+  // Load all modules automatically
+  loadModules();
 }
