@@ -1,7 +1,8 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
-import { bootPortal } from "../runtime/portal-runtime.js";
+import { bootPortal } from "./runtime/portal-runtime.js";
+
 
 // Start the Portal runtime (session, event bus, engines, modules)
 bootPortal();
