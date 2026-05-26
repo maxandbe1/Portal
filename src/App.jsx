@@ -48,8 +48,9 @@ function App() {
   }
 
   return (
-    <div style={{ padding: "2rem", fontFamily: "system-ui" }}>
-      <h1>SIM Portal</h1>
+    <div style={{ padding: "2rem", fontFamily: "system-ui" }}
+      <h1>SIM 🐝 Portal</h1>
+
       <p>Modules loaded:</p>
       <ul>
         {Object.keys(modules).map((key) => (
