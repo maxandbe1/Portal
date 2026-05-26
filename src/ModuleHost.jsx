@@ -10,7 +10,7 @@ export default function ModuleHost({ moduleName }) {
     setComponent(null);
     setError(null);
 
-    import(`/modules/${moduleName}/module-ui.js`)
+    import(`../modules/${moduleName}/module-ui.js`)
       .then((mod) => {
         if (mod.default) {
           setComponent(() => mod.default);
