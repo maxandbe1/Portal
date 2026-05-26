@@ -46,18 +46,16 @@ function App() {
       </div>
     );
   }
+return (
+  <div style={{ padding: "2rem", fontFamily: "system-ui" }}>
+    <h1>🐝 Portal</h1>
+    <p>Modules loaded:</p>
+    <ul>
+      {modules.map((m) => (
+        <li key={m}>{m}</li>
+      ))}
+    </ul>
+  </div>
+);
 
-  return (
-    <div style={{ padding: "2rem", fontFamily: "system-ui" }}
-      <h1>Portal</h1>
-      <p>Modules loaded:</p>
-      <ul>
-        {Object.keys(modules).map((key) => (
-          <li key={key}>{key}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-export default App;
+  
