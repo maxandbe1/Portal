@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import ModuleHost from "./ModuleHost";
 
 function App() {
   const [modules, setModules] = useState([]);
@@ -165,11 +166,18 @@ function App() {
               >
                 {activeModule}
               </h2>
-              <p style={{ fontSize: "0.9rem", opacity: 0.75 }}>
-                Module surface for <strong>{activeModule}</strong> will render
-                here. This is the Portal UI shell — modules plug into this
-                viewport.
-              </p>
+
+              <div
+                style={{
+                  marginTop: "1rem",
+                  padding: "1rem",
+                  background: "rgba(255,255,255,0.03)",
+                  borderRadius: 8,
+                  border: "1px solid rgba(255,255,255,0.06)",
+                }}
+              >
+                <ModuleHost moduleName={activeModule} />
+              </div>
             </div>
           )}
         </main>
