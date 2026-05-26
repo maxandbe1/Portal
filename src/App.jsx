@@ -1,61 +1,37 @@
 import { useEffect, useState } from "react";
-import { loadModules } from "./runtime/loadModules";
 
 function App() {
-  const [modules, setModules] = useState(null);
-  const [error, setError] = useState(null);
+  const [modules, setModules] = useState([]);
 
   useEffect(() => {
-    let cancelled = false;
-
-    async function init() {
+    async function loadModules() {
       try {
-        const loaded = await loadModules();
-        if (!cancelled) {
-          setModules(loaded);
-        }
+        const response = await fetch("/modules/module-index.json");
+        const moduleIndex = await response.json();
+
+        const loadedModules = Object.keys(moduleIndex);
+        setModules(loadedModules);
+
+        console.log("🐝 Portal: Modules loaded:", loadedModules);
       } catch (err) {
-        console.error("[Portal] App init failed:", err);
-        if (!cancelled) {
-          setError(err.message || "Unknown error");
-        }
+        console.error("🐝 Portal: Failed to load modules", err);
       }
     }
 
-    init();
-
-    return () => {
-      cancelled = true;
-    };
+    loadModules();
   }, []);
 
-  if (error) {
-    return (
-      <div style={{ padding: "2rem", color: "#f55", fontFamily: "system-ui" }}>
-        <h1>Portal Error</h1>
-        <p>{error}</p>
-      </div>
-    );
-  }
+  return (
+    <div style={{ padding: "2rem", fontFamily: "system-ui" }}>
+      <h1>🐝 Portal</h1>
+      <p>Modules loaded:</p>
+      <ul>
+        {modules.map((m) => (
+          <li key={m}>{m}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
-  if (!modules) {
-    return (
-      <div style={{ padding: "2rem", fontFamily: "system-ui" }}>
-        <h1>Loading Portal…</h1>
-        <p>Please wait while modules initialize.</p>
-      </div>
-    );
-  }
-return (
-  <div style={{ padding: "2rem", fontFamily: "system-ui" }}>
-    <h1>🐝 Portal</h1>
-    <p>Modules loaded:</p>
-    <ul>
-      {modules.map((m) => (
-        <li key={m}>{m}</li>
-      ))}
-    </ul>
-  </div>
-);
-
-  
+export default App;
