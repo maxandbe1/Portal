@@ -1,15 +1,63 @@
-import React from "react";
-import Identity from "./pages/Identity.jsx";
-import Patterns from "./pages/Patterns.jsx";
+import { useEffect, useState } from "react";
+import { loadModules } from "./runtime/loadModules";
 
-export default function App() {
+function App() {
+  const [modules, setModules] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function init() {
+      try {
+        const loaded = await loadModules();
+        if (!cancelled) {
+          setModules(loaded);
+        }
+      } catch (err) {
+        console.error("[Portal] App init failed:", err);
+        if (!cancelled) {
+          setError(err.message || "Unknown error");
+        }
+      }
+    }
+
+    init();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (error) {
+    return (
+      <div style={{ padding: "2rem", color: "#f55", fontFamily: "system-ui" }}>
+        <h1>Portal Error</h1>
+        <p>{error}</p>
+      </div>
+    );
+  }
+
+  if (!modules) {
+    return (
+      <div style={{ padding: "2rem", fontFamily: "system-ui" }}>
+        <h1>Loading Portal…</h1>
+        <p>Please wait while modules initialize.</p>
+      </div>
+    );
+  }
+
   return (
-    <main style={{ padding: "2rem", fontFamily: "sans-serif" }}>
-      <h1>Portal</h1>
-      <p>Full application mode activated.</p>
-
-      <Identity />
-      <Patterns />
-    </main>
+    <div style={{ padding: "2rem", fontFamily: "system-ui" }}>
+      <h1>SIM Portal</h1>
+      <p>Modules loaded:</p>
+      <ul>
+        {Object.keys(modules).map((key) => (
+          <li key={key}>{key}</li>
+        ))}
+      </ul>
+    </div>
   );
 }
+
+export default App;
