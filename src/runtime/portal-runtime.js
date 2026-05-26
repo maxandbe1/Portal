@@ -1,41 +1,22 @@
+// src/runtime/portal-runtime.js
 import { EventBus } from "./event-bus.js";
 import { initSession } from "../population/session-init.js";
 import { loadModules } from "./module-loader.js";
 
 export function bootPortal() {
+  // Global Portal object
   window.Portal = {
     session: initSession(),
     bus: new EventBus(),
-    modules: {},
-    engines: {}
+    modules: {},   // place for loaded modules
+    engines: {}    // place for engines / services
   };
 
   console.log("%cPortal Runtime Booted", "color:#0f0;font-weight:bold;");
   console.log("Session:", window.Portal.session);
 
-  loadModules();
-}
-
-export async function loadModules() {
-  const registry = await fetch("/modules/module-index.json").then(r => r.json());
-
-  for (const key of registry.order) {
-    const moduleInfo = registry.modules[key];
-
-    if (!moduleInfo) {
-      console.warn(`Module '${key}' not found in registry`);
-      continue;
-    }
-
-    // Dynamically import the module bridge
-    const mod = await import(moduleInfo.path);
-
-    if (typeof mod.loadIdentityModule === "function") {
-      mod.loadIdentityModule();
-    }
-
-    console.log(`Module loaded: ${moduleInfo.name}`);
-  }
-
-  console.log("%cAll modules loaded", "color:#0f0;font-weight:bold;");
+  // Load modules (non‑blocking, with internal error handling)
+  loadModules().catch(err => {
+    console.error("[Portal] Module loading failed:", err);
+  });
 }
