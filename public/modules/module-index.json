@@ -1,0 +1,16 @@
+{
+  "order": [
+    "identity",
+    "patterns"
+  ],
+  "modules": {
+    "identity": {
+      "name": "Identity Module",
+      "path": "/modules/identity/module-bridge.js"
+    },
+    "patterns": {
+      "name": "Patterns Module",
+      "path": "/modules/patterns/module-bridge.js"
+    }
+  }
+}
