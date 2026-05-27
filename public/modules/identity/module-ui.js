@@ -1,12 +1,18 @@
 // public/modules/identity/module-ui.js
 
-import { loadIdentityModule } from "../../src/modules/identity/identity-engine.js";
+import { loadIdentityEngine } from "../../src/modules/identity/identity-engine.js";
+import { identityBridge } from "./module-bridge.js";
 
 export default function IdentityUI() {
-  const state = loadIdentityModule();
+  const engine = loadIdentityEngine();
+  const bridge = identityBridge();
 
   return {
     name: "Identity Module",
-    state
+    engine,
+    bridge,
+    init() {
+      console.log("%c[Identity] UI initialized", "color:#0ff");
+    }
   };
 }
