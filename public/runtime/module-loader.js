@@ -13,19 +13,42 @@ export async function loadPortalModules() {
 
   console.log("%cBooting Portal Modules...", "color:#fff;background:#000;padding:4px;");
 
-  const identity = IdentityUI();
-  const patterns = PatternsUI();
-  const memory = MemoryUI();
-  const sovereignty = SovereigntyUI();
-  const consoleModule = ConsoleUI();
-  const ecosystem = EcosystemUI();
-
-  return {
-    identity,
-    patterns,
-    memory,
-    sovereignty,
-    console: consoleModule,
-    ecosystem
+  const moduleDefs = {
+    identity: IdentityUI,
+    patterns: PatternsUI,
+    memory: MemoryUI,
+    sovereignty: SovereigntyUI,
+    console: ConsoleUI,
+    ecosystem: EcosystemUI
   };
+
+  for (const [name, Module] of Object.entries(moduleDefs)) {
+    const instance = Module();
+
+    // Create DOM container for module
+    const container = document.createElement("div");
+    container.id = `portal-module-${name}`;
+    container.style.display = "none"; // hidden until activated
+    document.body.appendChild(container);
+
+    // Mount module if it has a mount() function
+    if (typeof instance.mount === "function") {
+      instance.mount(container);
+    }
+
+    // Init module if it has an init() function
+    if (typeof instance.init === "function") {
+      instance.init();
+    }
+
+    // Register module
+    window.Portal.modules[name] = {
+      instance,
+      container
+    };
+
+    console.log(`%cModule loaded: ${name}`, "color:#0f0;font-weight:bold;");
+  }
+
+  return window.Portal.modules;
 }
