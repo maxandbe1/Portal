@@ -3,7 +3,7 @@
 import { getIdentityState, updateIdentityState } from "../../src/modules/identity/identity-engine.js";
 
 export default function IdentityUI() {
-  const state = getIdentityState();
+  let state = getIdentityState();
 
   return {
     name: "identity",
@@ -23,10 +23,11 @@ export default function IdentityUI() {
 
     update(newState) {
       updateIdentityState(newState);
+      state = getIdentityState();
 
       const el = document.getElementById("identity-state");
       if (el) {
-        el.textContent = JSON.stringify(getIdentityState(), null, 2);
+        el.textContent = JSON.stringify(state, null, 2);
       }
     }
   };
