@@ -11,6 +11,7 @@ const moduleLoaders = {
 
 async function loadModuleIndex() {
   const res = await fetch("/modules/module-index.json");
+
   if (!res.ok) {
     throw new Error(`Failed to load module-index.json: ${res.status}`);
   }
