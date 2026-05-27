@@ -1,12 +1,14 @@
-// public/runtime/boot.js
-
-import { loadPortalModules } from "./module-loader.js";
+import { loadPortalModulesDynamic } from "./dynamic-module-loader.js";
+import { startHotReload } from "./hot-reload.js";
 
 (async () => {
-  console.log("%cPORTAL RUNTIME ONLINE", "color:#0f0;font-weight:bold;");
+  console.log(
+    "%cPORTAL RUNTIME ONLINE (dynamic)",
+    "color:#0f0;font-weight:bold;"
+  );
 
-  const modules = await loadPortalModules();
+  await loadPortalModulesDynamic();
 
-  console.log("%cAll modules loaded:", "color:#0f0;font-weight:bold;");
-  console.table(modules);
+  // 🔥 enable hot reload
+  startHotReload();
 })();
