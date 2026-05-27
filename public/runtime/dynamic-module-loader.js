@@ -9,16 +9,18 @@ const moduleLoaders = {
   ecosystem: () => import("../modules/ecosystem/module-ui.js")
 };
 
-
+// FIXED: environment‑aware module index path
 async function loadModuleIndex() {
-  const res = await fetch("/module-index.json"); // ← THIS LINE
-  const json = await res.json();
-  return json.modules || [];
-}
+  const indexPath = import.meta.env.DEV
+    ? "/public/module-index.json"
+    : "/module-index.json";
+
+  const res = await fetch(indexPath);
 
   if (!res.ok) {
     throw new Error(`Failed to load module-index.json: ${res.status}`);
   }
+
   const json = await res.json();
   return json.modules || [];
 }
@@ -33,8 +35,6 @@ export async function loadPortalModulesDynamic() {
   );
 
   const index = await loadModuleIndex();
-
-  // sort by order if present
   const sorted = [...index].sort((a, b) => (a.order || 0) - (b.order || 0));
 
   const loaded = {};
@@ -62,10 +62,7 @@ export async function loadPortalModulesDynamic() {
       window.Portal.modules[name] = instance;
       loaded[name] = instance;
 
-      console.log(
-        `%cModule loaded: ${name}`,
-        "color:#0f0;font-weight:bold;"
-      );
+      console.log(`%cModule loaded: ${name}`, "color:#0f0;font-weight:bold;");
     } catch (err) {
       console.error(`Failed to load module: ${name}`, err);
     }
