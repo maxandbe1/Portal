@@ -1,17 +1,15 @@
-export default {
-  id: "patterns",
-  name: "Patterns Module",
-  version: "1.0.0",
+// public/modules/patterns/module-bridge.js
+import { getPatternsState, updatePatternsState } from "../../src/modules/patterns/patterns-engine.js";
 
-  init() {
-    console.log("[Patterns Module] initialized");
-  },
+export function loadPatternsModule() {
+  const state = getPatternsState();
 
-  run(input) {
-    return {
-      module: "patterns",
-      input,
-      output: `Patterns module processed: ${JSON.stringify(input)}`
-    };
-  }
-};
+  window.Portal.modules.patterns = {
+    name: "Patterns Module",
+    state,
+    update: updatePatternsState
+  };
+
+  console.log("%cPatterns Module Loaded", "color:#ff0;font-weight:bold;");
+  return state;
+}
