@@ -9,7 +9,7 @@ const moduleLoaders = {
   ecosystem: () => import("../modules/ecosystem/module-ui.js")
 };
 
-// FIXED: environment‑aware module index path
+// FIXED: clean, valid, environment-aware loader
 async function loadModuleIndex() {
   const indexPath = import.meta.env.DEV
     ? "/public/module-index.json"
