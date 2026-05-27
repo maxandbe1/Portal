@@ -1,8 +1,18 @@
 // public/modules/identity/module-bridge.js
 import { getIdentityState, updateIdentityState } from "../../src/modules/identity/identity-engine.js";
 
-export function loadIdentityModule() {
-  const state = getIdentityState();
+// public/modules/identity/module-bridge.js
+
+export function identityBridge() {
+  return {
+    name: "Identity Bridge",
+    status: "connected",
+    ping() {
+      return "identity-bridge-ok";
+    }
+  };
+}
+
 
   window.Portal.modules.identity = {
     name: "Identity Module",
