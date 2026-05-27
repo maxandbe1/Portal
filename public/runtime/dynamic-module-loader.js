@@ -9,8 +9,12 @@ const moduleLoaders = {
   ecosystem: () => import("../modules/ecosystem/module-ui.js")
 };
 
+
 async function loadModuleIndex() {
-  const res = await fetch("/modules/module-index.json");
+  const res = await fetch("/module-index.json"); // ← THIS LINE
+  const json = await res.json();
+  return json.modules || [];
+}
 
   if (!res.ok) {
     throw new Error(`Failed to load module-index.json: ${res.status}`);
