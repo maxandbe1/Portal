@@ -1,15 +1,33 @@
-// public/modules/memory/module-bridge.js
-import { getMemoryState, updateMemoryState } from "../../src/modules/memory/memory-engine.js";
+// src/modules/patterns/patterns-engine.js
 
-export function loadMemoryModule() {
-  const state = getMemoryState();
+export function loadPatternsEngine() {
+  return {
+    name: "Patterns Engine",
+    version: "1.0.0",
 
-  window.Portal.modules.memory = {
-    name: "Memory Module",
-    state,
-    update: updateMemoryState
+    state: {
+      initialized: true,
+      timestamp: Date.now(),
+      patterns: []
+    },
+
+    getState() {
+      return this.state;
+    },
+
+    addPattern(pattern) {
+      this.state.patterns = [...this.state.patterns, pattern];
+      return this.state;
+    },
+
+    removePattern(id) {
+      this.state.patterns = this.state.patterns.filter(p => p.id !== id);
+      return this.state;
+    },
+
+    update(patch) {
+      this.state = { ...this.state, ...patch };
+      return this.state;
+    }
   };
-
-  console.log("%cMemory Module Loaded", "color:#a0f;font-weight:bold;");
-  return state;
 }
