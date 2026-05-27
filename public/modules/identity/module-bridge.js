@@ -1,17 +1,15 @@
-export default {
-  id: "identity",
-  name: "Identity Module",
-  version: "1.0.0",
+// public/modules/identity/module-bridge.js
+import { getIdentityState, updateIdentityState } from "../../src/modules/identity/identity-engine.js";
 
-  init() {
-    console.log("[Identity Module] initialized");
-  },
+export function loadIdentityModule() {
+  const state = getIdentityState();
 
-  run(input) {
-    return {
-      module: "identity",
-      input,
-      output: `Identity module received: ${JSON.stringify(input)}`
-    };
-  }
-};
+  window.Portal.modules.identity = {
+    name: "Identity Module",
+    state,
+    update: updateIdentityState
+  };
+
+  console.log("%cIdentity Module Loaded", "color:#0ff;font-weight:bold;");
+  return state;
+}
