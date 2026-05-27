@@ -1,19 +1,12 @@
-// src/modules/identity/identity-engine.js
+let identityState = {
+  name: "Max",
+  status: "active"
+};
 
-export function loadIdentityEngine() {
-  return {
-    name: "Identity Engine",
-    version: "1.0.0",
-    state: {
-      initialized: true,
-      timestamp: Date.now()
-    },
-    getState() {
-      return this.state;
-    },
-    update(patch) {
-      this.state = { ...this.state, ...patch };
-      return this.state;
-    }
-  };
+export function getIdentityState() {
+  return identityState;
+}
+
+export function updateIdentityState(newState) {
+  identityState = { ...identityState, ...newState };
 }
