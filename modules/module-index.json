@@ -1,30 +1,46 @@
-{"ecosystem": {
-  "name": "Ecosystem Module",
-  "path": "/modules/ecosystem/module-ui.js"
-}
-
- "identity": {
-    "name": "Identity Module",
-    "path": "/modules/identity/module-ui.js"
-  },
-  "patterns": {
-    "name": "Patterns Module",
-    "path": "/modules/patterns/module-ui.js"
-  },
-  "memory": {
-    "name": "Memory Module",
-    "path": "/modules/memory/module-ui.js"
-  },
-  "sovereignty": {
-    "name": "Sovereignty Module",
-    "path": "/modules/sovereignty/module-ui.js"
-  },
-  "console": {
-    "name": "Console Module",
-    "path": "/modules/console/module-ui.js"
-  },
-  "ecosystem": {
-    "name": "Ecosystem Module",
-    "path": "/modules/ecosystem/module-ui.js"
-  }
+{
+  "modules": [
+    {
+      "name": "identity",
+      "ui": "public/modules/identity/module-ui.js",
+      "bridge": "public/modules/identity/module-bridge.js",
+      "engine": "src/modules/identity/identity-engine.js",
+      "order": 1
+    },
+    {
+      "name": "patterns",
+      "ui": "public/modules/patterns/module-ui.js",
+      "bridge": "public/modules/patterns/module-bridge.js",
+      "engine": "src/modules/patterns/patterns-engine.js",
+      "order": 2
+    },
+    {
+      "name": "memory",
+      "ui": "public/modules/memory/module-ui.js",
+      "bridge": "public/modules/memory/module-bridge.js",
+      "engine": "src/modules/memory/memory-engine.js",
+      "order": 3
+    },
+    {
+      "name": "sovereignty",
+      "ui": "public/modules/sovereignty/module-ui.js",
+      "bridge": "public/modules/sovereignty/module-bridge.js",
+      "engine": "src/modules/sovereignty/sovereignty-engine.js",
+      "order": 4
+    },
+    {
+      "name": "console",
+      "ui": "public/modules/console/module-ui.js",
+      "bridge": "public/modules/console/module-bridge.js",
+      "engine": "src/modules/console/console-engine.js",
+      "order": 5
+    },
+    {
+      "name": "ecosystem",
+      "ui": "public/modules/ecosystem/module-ui.js",
+      "bridge": "public/modules/ecosystem/module-bridge.js",
+      "engine": "src/modules/ecosystem/ecosystem-engine.js",
+      "order": 6
+    }
+  ]
 }
