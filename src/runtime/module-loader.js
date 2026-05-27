@@ -1,3 +1,11 @@
+// src/runtime/module-loader.js
+import IdentityUI from "../modules/identity/module-ui.js";
+import PatternsUI from "../modules/patterns/module-ui.js";
+import MemoryUI from "../modules/memory/module-ui.js";
+import SovereigntyUI from "../modules/sovereignty/module-ui.js";
+import ConsoleUI from "../modules/console/module-ui.js";
+import EcosystemUI from "../modules/ecosystem/module-ui.js";
+
 
 // src/runtime/module-loader.js
 
